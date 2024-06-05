@@ -12,11 +12,28 @@
 
 #include "../include/solong.h"
 
+static void	open_xpm(t_data *data)
+{	
+	int	img_size;
+
+	img_size = TILE_SIZE;
+    data->tiles.wall = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
+			WALL_TILE, &img_size, &img_size);
+    data->tiles.floor = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
+			FLOOR_TILE, &img_size, &img_size);
+    data->tiles.player = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
+			PLAYER_TILE, &img_size, &img_size);
+    data->tiles.collectible = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
+			COLLECTIBLE_TILE, &img_size, &img_size);
+    data->tiles.exit = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
+			EXIT_TILE, &img_size, &img_size);
+}
+
 int exit_game(t_data *data)
 {
 	ft_free_all(data);
-	exit(0);
-	return (0);
+	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 void	init_mlx(t_data *data)
@@ -52,13 +69,25 @@ int main(int argc, char **argv)
 	
 	if (argc != 2)
 	{
-		printf("Error: Invalid number of arguments\n");
+		ft_printf("Error: Invalid number of arguments\n");
 		return (EXIT_FAILURE);
 	}
+	//Initialisation de tout à NULL
 	ft_init(&data);
-	get_map(argv[1], &data);
+
+	//Récupération des infos la map en colonnes et lignes
+	init_map(argv[1], &data);
+
+	//Initialisation de la fenêtre
 	init_mlx(&data);
-	render_map(&data);
+
+	//Chargement des textures
+	open_xpm(&data);
+
+	//Affichage de la map
+	render_tiles(&data);
+
+	//Gestion des événements
 	mlx_hook(data.mlx.win_ptr, KeyRelease, KeyReleaseMask, &ft_commands, &data.mlx);
 	mlx_hook(data.mlx.win_ptr, DestroyNotify, StructureNotifyMask, &exit_game, &data.mlx);
 	mlx_loop(data.mlx.mlx_ptr);

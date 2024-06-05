@@ -12,6 +12,7 @@
 
 #include "../include/solong.h"
 
+//Copie src dans dest jusqu'à n caractères ou jusqu'à la fin de src
 static char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
 	size_t	i;
@@ -31,24 +32,25 @@ static char	*ft_strncpy(char *dest, const char *src, size_t n)
 	return (dest);
 }
 
+
 char	*trim_free(char *s1, char const *set)
 {
-	size_t	beg;
+	size_t	start;
 	size_t	end;
 	char	*trimmed_str;
 
 	if (!s1 || !set)
 		return (NULL);
-	beg = 0;
-	while (s1[beg] != '\0' && ft_strchr(set, s1[beg]) != NULL)
-		beg += 1;
-	end = ft_strlen(s1 + beg);
-	while (end > beg && ft_strchr(set, s1[(beg + end) - 1]) != NULL)
+	start = 0;
+	while (s1[start] != '\0' && ft_strchr(set, s1[start]) != NULL)
+		start += 1;
+	end = ft_strlen(s1 + start);
+	while (end > start && ft_strchr(set, s1[(start + end) - 1]) != NULL)
 		end -= 1;
 	trimmed_str = malloc((end + 1) * sizeof(char));
 	if (trimmed_str == NULL)
 		return (NULL);
-	ft_strncpy(trimmed_str, (s1 + beg), end);
+	ft_strncpy(trimmed_str, (s1 + start), end);
 	free(s1);
 	return (trimmed_str);
 }
@@ -89,14 +91,16 @@ static void	get_lines(char *map_file, t_data *data)
 	while (i < (data->map.rows - 1))
 	{
 		data->map.map[i] = trim_free(data->map.map[i], "\n");
-		i += 1;
+		i++;
 	}
 	data->map.columns = ft_strlen(data->map.map[0]);
 }
 
-void	get_map(char *map_file, t_data *data)
+void	init_map(char *map_file, t_data *data)
 {
 	get_nbr_rows(map_file, data);
 	data->map.map = malloc((data->map.rows + 1) * sizeof(char *));
+	if (data->map.map == NULL)
+		ft_error(data, "Malloc Error\n");
 	get_lines(map_file, data);
 }

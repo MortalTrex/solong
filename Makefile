@@ -1,6 +1,6 @@
 NAME = so_long
 
-SRC = src/ft_init.c \
+SRC = src/init.c \
 	  src/error.c \
 	  src/free_all.c \
 	  src/main.c \

@@ -68,6 +68,6 @@ void    render_map(t_data *data);
 void    put_player_tile(t_data *data);
 void    update_player_pos(t_data *data, bool horizontal, int length);
 
-void	get_map(char *map_file, t_data *data);
+void	init_map(char *map_file, t_data *data);
 
 #endif

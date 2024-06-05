@@ -12,23 +12,6 @@
 
 #include "../include/solong.h"
 
-static void	open_xpm(t_data *data)
-{	
-	int	img_size;
-
-	img_size = TILE_SIZE;
-    data->tiles.wall = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
-			WALL_TILE, &img_size, &img_size);
-    data->tiles.floor = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
-			FLOOR_TILE, &img_size, &img_size);
-    data->tiles.player = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
-			PLAYER_TILE, &img_size, &img_size);
-    data->tiles.collectible = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
-			COLLECTIBLE_TILE, &img_size, &img_size);
-    data->tiles.exit = mlx_xpm_file_to_image(data->mlx.mlx_ptr,
-			EXIT_TILE, &img_size, &img_size);
-}
-
 void	render_tiles(t_data *data)
 {
 	int		i;
@@ -56,10 +39,3 @@ void	render_tiles(t_data *data)
 	}
 	put_player_tile(data);
 }
-
-void	render_map(t_data *data)
-{
-	open_xpm(data);
-	render_tiles(data);
-}
-
