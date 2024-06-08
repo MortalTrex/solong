@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:03:27 by rbalazs           #+#    #+#             */
-/*   Updated: 2023/12/13 11:03:29 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/08 15:19:18 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,3 @@ void	*ft_calloc(size_t count, size_t size)
 	ft_bzero(str, count * size);
 	return (str);
 }
-
-/*
-#include <stdio.h>
-int main()
-{
-  int *tab = (int *) ft_calloc (0, 5);
-  int i;
-
-  for(i = 0; i < 3; i++)
-  {
-    tab[i] = i;
-    printf("%d", tab[i]);
-  }
-  free(tab);
-}
-*/

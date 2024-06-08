@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:27:30 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/05/30 18:31:22 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/08 16:49:41 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void    ft_init(t_data *data);
  
 //FREE
 void ft_free_all(t_data *data);
+int exit_game(t_data *data);
 
 //ERROR
 void    ft_error(t_data *data, char *str);

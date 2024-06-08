@@ -1,8 +1,7 @@
 NAME = so_long
 
 SRC = src/init.c \
-	  src/error.c \
-	  src/free_all.c \
+	  src/free_error.c \
 	  src/main.c \
 	  src/render.c \
 	  src/player.c \

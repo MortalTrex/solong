@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:34:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/05/30 18:34:32 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/08 17:00:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ int main(int argc, char **argv)
 	render_tiles(&data);
 
 	//Gestion des événements
-	mlx_hook(data.mlx.win_ptr, KeyRelease, KeyReleaseMask, &ft_commands, &data.mlx);
-	mlx_hook(data.mlx.win_ptr, DestroyNotify, StructureNotifyMask, &exit_game, &data.mlx);
+	
+	mlx_hook(data.mlx.win_ptr, KEYPRESS_EVENT, (1L << 0), ft_commands, data);
+	mlx_hook(data.mlx.win_ptr, DESTROY_NOTIFY_EVENT, (1L << 17),
+		exit_game, data);
 	mlx_loop(data.mlx.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

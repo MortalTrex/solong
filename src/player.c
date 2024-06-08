@@ -6,12 +6,13 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 10:17:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/05/30 17:39:19 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/08 16:09:03 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/solong.h"
 
+//Affiche le joueur sur la map et compte le nombre de mouvements
 void	put_player_tile(t_data *data)
 {
 	char	*moves_str;
@@ -21,32 +22,36 @@ void	put_player_tile(t_data *data)
 		TILE_SIZE * data->player_pos.x, TILE_SIZE * data->player_pos.y);
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 		data->tiles.wall, 0, 0);
+	//Affiche le nombre de mouvements sur la fenêtre
 	moves_str = ft_itoa(data->map.moves);
+	if (moves_str == NULL)
+		ft_error(data, "Memory Error (moves)\n");
 	mlx_string_put(data->mlx.mlx_ptr, data->mlx.win_ptr, 32, 10, 1, moves_str);
 	free(moves_str);
 }
 
 static void	which_tile(t_data *data)
 {
-	if (data->map.map[data->player_pos.y]
-		[data->player_pos.x] == 'C')
+	//Si le joueur se trouve sur un collectible, en retire un
+	if (data->map.map[data->player_pos.y][data->player_pos.x] == 'C')
 	{
-		data->map.map[data->player_pos.y]
-		[data->player_pos.x] = 0;
+		data->map.map[data->player_pos.y][data->player_pos.x] = 0;
 		data->map.collectibles -= 1;
 		return ;
 	}
-	if (data->map.map[data->player_pos.y][data->player_pos.x] == 'E'
+	//Si le joueur se trouve sur la sortie et qu'il n'y a plus de collectibles
+	if (data->map.map[data->player_pos.y][data->player_pos.x] == 'E' 
 		&& data->map.collectibles == 0)
 	{
 		ft_printf("You won in %d moves!\n", data->map.moves);
-        exit(0);
+        exit_game(data);
 	}
 }
 
-/* Overloads the player tile that is left behind when the player moves */
+
 static void	update_left_behind_tile(t_data *data)
 {
+	//Si le joueur se trouve sur la sortie, on affiche la sortie
 	if (data->map.map[data->player_pos.y]
 		[data->player_pos.x] == 'E')
 	{
@@ -56,6 +61,7 @@ static void	update_left_behind_tile(t_data *data)
 			TILE_SIZE * data->player_pos.y);
 	}
 	else
+	//Sinon, on affiche le sol
 		mlx_put_image_to_window(
 			data->mlx.mlx_ptr, data -> mlx.win_ptr, data->tiles.floor,
 			TILE_SIZE * data->player_pos.x,
@@ -64,6 +70,7 @@ static void	update_left_behind_tile(t_data *data)
 
 void	update_player_pos(t_data *data, bool horizontal, int length)
 {
+	//Si le joueur est sur le bord de la map au niveau du x, on ne le déplace pas
 	if (horizontal)
 	{
 		if (data->map.map[data->player_pos.y]
@@ -73,6 +80,7 @@ void	update_player_pos(t_data *data, bool horizontal, int length)
 		data->player_pos.x += length;
 	}
 	else
+	//Si le joueur est sur le bord de la map au niveau du y, on ne le déplace pas
 	{
 		if (data->map.map[data->player_pos.y + length]
 			[data->player_pos.x] == 1)
@@ -80,6 +88,8 @@ void	update_player_pos(t_data *data, bool horizontal, int length)
 		update_left_behind_tile(data);
 		data->player_pos.y += length;
 	}
+	//Vérifie si le joueur est sur un collectible ou la sortie
 	which_tile(data);
+	//Affiche le joueur sur la map
 	put_player_tile(data);
 }
