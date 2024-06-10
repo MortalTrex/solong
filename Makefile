@@ -3,7 +3,6 @@ NAME = so_long
 SRC = src/init.c \
 	  src/free_error.c \
 	  src/main.c \
-	  src/render.c \
 	  src/player.c \
 	  src/map.c \
 

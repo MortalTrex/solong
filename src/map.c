@@ -64,6 +64,8 @@ static void	get_nbr_rows(char *map_file, t_data *data)
 
 	count = 0;
 	map_fd = open(map_file, O_RDONLY);
+	if (map_fd == -1)
+		ft_error(data, "Map file not found\n");
 	temp = get_next_line(map_fd);
 	while (temp)
 	{
@@ -71,6 +73,8 @@ static void	get_nbr_rows(char *map_file, t_data *data)
 		free(temp);
 		temp = get_next_line(map_fd);
 	}
+	if (count == 0)
+		ft_error(data, "Empty map\n");
 	data->map.rows = count;
 	close(map_fd);
 }
@@ -82,6 +86,8 @@ static void	get_lines(char *map_file, t_data *data)
 	int	i;
 
 	map_fd = open(map_file, O_RDONLY);
+	if (map_fd == -1)
+		ft_error(data, "Map file not found\n");	
 	i = 0;
 	while (i < data->map.rows)
 		data->map.map[i++] = get_next_line(map_fd);

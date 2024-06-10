@@ -24,30 +24,54 @@ void    ft_error(t_data *data, char *str)
     ft_free_all(data);
     exit(EXIT_FAILURE);
 }
-static void ft_free_map(t_data *data)
+
+void	free_matrix(char **matrix)
 {
-    if (data->map.map != NULL)
-    {
-        free(data->map.map);
-    }
+	size_t	i;
+
+	i = 0;
+	if (!matrix)
+		return ;
+	while (matrix[i])
+	{
+		free(matrix[i]);
+		matrix[i] = NULL;
+		i++;
+	}
+	if (i > 0)
+		free(matrix);
+	matrix = NULL;
 }
-static void ft_free_display(t_data *data)
+
+void	destroy_tiles(t_data *data)
 {
-    if (data->mlx.mlx_ptr != NULL)
-    {
-        mlx_destroy_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
-        mlx_destroy_display(data->mlx.mlx_ptr);
-        free(data->mlx.mlx_ptr);
-    }
-    if (data->mlx.win_ptr != NULL)
-    {
-        mlx_destroy_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
-        free(data->mlx.win_ptr);
-    }
+	if (data->tiles.wall)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->tiles.wall);
+	if (data->tiles.floor)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->tiles.floor);
+	if (data->tiles.player)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->tiles.player);
+	if (data->tiles.collectible)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->tiles.collectible);
+	if (data->tiles.exit)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->tiles.exit);
 }
+
 
 void ft_free_all(t_data *data)
 {
-    ft_free_map(data);
-    ft_free_display(data);
+    if (!data)
+        return ;
+    destroy_tiles(data);
+    if (data->mlx.win_ptr != NULL)
+        mlx_destroy_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
+    if (data->mlx.mlx_ptr != NULL)
+    {
+        mlx_destroy_display(data->mlx.mlx_ptr);
+        free(data->mlx.mlx_ptr);
+    }
+    if (data->map.map != NULL)
+    {
+        free_matrix(data->map.map);
+    }
 }

@@ -21,6 +21,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include "../libft/libft.h"
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
@@ -32,5 +33,4 @@ char		*gft_strjoin(char *s1, const char *s2);
 char		*gft_strdup(const char *s1);
 char		*ft_assembleline(char *tmp);
 char		*ft_createtmp(int fd, char *buffer, char *tmp);
-
 #endif

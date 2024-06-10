@@ -35,6 +35,9 @@
 # define RIGHT 65363
 # define ESC 65307
 
+# define KEYPRESS_EVENT 2
+# define DESTROY_NOTIFY_EVENT 17
+
 ///////////////////////////////////////////INCLUDE///////////////////////////////////////////
 
 # include "../lib/mlx/mlx.h"

@@ -29,6 +29,34 @@ static void	open_xpm(t_data *data)
 			EXIT_TILE, &img_size, &img_size);
 }
 
+void	render_tiles(t_data *data)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < data->map.rows)
+	{
+		j = -1;
+		while (++j < data->map.columns)
+		{
+			if (data->map.map[i][j] == '1')
+				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
+					data->tiles.wall, TILE_SIZE * j, TILE_SIZE * i);
+            if (data->map.map[i][j] == '0')
+				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
+					data->tiles.floor, TILE_SIZE * j, TILE_SIZE * i);
+			if (data->map.map[i][j] == 'C')
+				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
+					data->tiles.collectible, TILE_SIZE * j, TILE_SIZE * i);
+			if (data->map.map[i][j] == 'E')
+				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
+					data->tiles.exit, TILE_SIZE * j, TILE_SIZE * i);
+		}
+	}
+	put_player_tile(data);
+}
+
 int exit_game(t_data *data)
 {
 	ft_free_all(data);
@@ -63,15 +91,16 @@ int ft_commands(int key, t_data *data)
 	return (EXIT_SUCCESS);
 }
 
+
 int main(int argc, char **argv)
 {
 	t_data data;
 	
 	if (argc != 2)
-	{
-		ft_printf("Error: Invalid number of arguments\n");
-		return (EXIT_FAILURE);
-	}
+		ft_error(&data, "Wrong number of arguments\n");
+	if (*argv[1] == '\0')
+		ft_error(&data, "Empty argument\n");
+	
 	//Initialisation de tout à NULL
 	ft_init(&data);
 
@@ -88,10 +117,9 @@ int main(int argc, char **argv)
 	render_tiles(&data);
 
 	//Gestion des événements
-	
-	mlx_hook(data.mlx.win_ptr, KEYPRESS_EVENT, (1L << 0), ft_commands, data);
-	mlx_hook(data.mlx.win_ptr, DESTROY_NOTIFY_EVENT, (1L << 17),
-		exit_game, data);
+	mlx_hook(data.mlx.win_ptr, KEYPRESS_EVENT, (1L << 0), ft_commands, &data);
+	mlx_hook(data.mlx.win_ptr, DESTROY_NOTIFY_EVENT, (1L << 17), exit_game, &data);
 	mlx_loop(data.mlx.mlx_ptr);
+
 	return (EXIT_SUCCESS);
 }
