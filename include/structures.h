@@ -29,6 +29,7 @@ typedef struct s_map
 	int exit;
 	int player;
     int moves;
+	t_point			player_pos;
 } t_map;
 
 typedef struct s_tiles {
@@ -48,7 +49,24 @@ typedef struct s_data {
     t_mlx mlx;
     t_map map; 
     t_tiles tiles;
-    t_point player_pos;
 }				t_data;
+
+static inline t_data	init_game(void)
+{
+	return ((t_data){
+		.map.map = NULL,
+		.map.rows = 0,
+		.map.columns = 0,
+		.map.collectibles = 0,
+		.map.exit = 0,
+		.map.player = 0,
+		.tiles.collectible = NULL,
+		.tiles.exit = NULL,
+		.tiles.floor = NULL,
+		.tiles.player = NULL,
+		.tiles.wall = NULL,
+		.map.moves = -1,
+	});
+}
 
 #endif

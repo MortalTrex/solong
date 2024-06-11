@@ -12,11 +12,14 @@
 
 #include "../include/solong.h"
 
+/*
 static void ft_init_point(t_data *data)
 {
     data->player_pos.x = 0;
     data->player_pos.y = 0;
 }
+*/
+
 static void ft_init_map(t_data *data)
 {
     data->map.map = NULL;
@@ -45,7 +48,7 @@ static void ft_init_tiles(t_data *data)
 
 void    ft_init(t_data *data)
 {
-    ft_init_point(data);
+    //ft_init_point(data);
     ft_init_map(data);
     ft_init_display(data);
     ft_init_tiles(data);

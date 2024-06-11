@@ -102,7 +102,8 @@ int main(int argc, char **argv)
 		ft_error(&data, "Empty argument\n");
 	
 	//Initialisation de tout à NULL
-	ft_init(&data);
+	//ft_init(&data);
+	data = init_game();
 
 	//Récupération des infos la map en colonnes et lignes
 	init_map(argv[1], &data);
