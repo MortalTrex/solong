@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:34:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/06/08 17:00:26 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/21 18:25:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,24 @@ void	render_tiles(t_data *data)
 				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 					data->tiles.floor, TILE_SIZE * j, TILE_SIZE * i);
 			if (data->map.map[i][j] == 'C')
+			{
+				data->map.total_collectibles += 1;
 				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 					data->tiles.collectible, TILE_SIZE * j, TILE_SIZE * i);
+			}
 			if (data->map.map[i][j] == 'E')
 				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 					data->tiles.exit, TILE_SIZE * j, TILE_SIZE * i);
+			if (data->map.map[i][j] == 'P')
+			{
+				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
+					data->tiles.player, TILE_SIZE * j, TILE_SIZE * i);
+				data->player_pos.x = j;
+				data->player_pos.y = i;
+			}
 		}
 	}
-	put_player_tile(data);
+	//put_player_tile(data);
 }
 
 int exit_game(t_data *data)
@@ -82,10 +92,10 @@ int ft_commands(int key, t_data *data)
 		exit_game(data);
 	else if (key == W || key == UP)
 		update_player_pos(data, false, -1);
-	else if (key == A || key == LEFT)
-		update_player_pos(data, true, -1);
 	else if (key == S || key == DOWN)
 		update_player_pos(data, false, 1);
+	else if (key == A || key == LEFT)
+		update_player_pos(data, true, -1);
 	else if (key == D || key == RIGHT)
 		update_player_pos(data, true, 1);
 	return (EXIT_SUCCESS);
@@ -103,11 +113,14 @@ int main(int argc, char **argv)
 	
 	//Initialisation de tout à NULL
 	//ft_init(&data);
-	data = init_game();
-
+	bzero(&data, sizeof(t_data));
+	
 	//Récupération des infos la map en colonnes et lignes
 	init_map(argv[1], &data);
 
+	//CheckerDiego
+	check(data);
+	
 	//Initialisation de la fenêtre
 	init_mlx(&data);
 

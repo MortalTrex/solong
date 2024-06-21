@@ -3,60 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 11:07:28 by rbalazs           #+#    #+#             */
-/*   Updated: 2023/12/13 11:07:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:08:01 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_count(int n)
+static int	ft_digits(int n)
 {
-	long	n1;
-	long	res;
+	int	digits;
 
-	res = 0;
-	n1 = n;
-	if (n1 < 0)
+	digits = 0;
+	if (n <= 0)
+		digits += 1;
+	while (n != 0)
 	{
-		n1 = n1 * -1;
-		res++;
+		n /= 10;
+		digits += 1;
 	}
-	if (n1 == 0)
-		res = 1;
-	while (n1 > 0)
-	{
-		res++;
-		n1 = n1 / 10;
-	}
-	return (res);
+	return (digits);
 }
 
 char	*ft_itoa(int n)
 {
-	int		i;
-	char	*res;
-	long	last_nb;
+	int		digits;
+	int		signal;
+	char	*result;
 
-	i = ft_count(n);
-	res = malloc (sizeof(char) * i + 1);
-	if (res == NULL)
+	digits = ft_digits(n);
+	signal = 1;
+	result = malloc((digits + 1) * sizeof(char));
+	if (!result)
 		return (NULL);
-	last_nb = n;
+	result[digits--] = '\0';
 	if (n < 0)
-		last_nb = last_nb * (-1);
-	res[i] = '\0';
-	while (i > 0)
 	{
-		res[i - 1] = '0' + last_nb % 10;
-		last_nb = last_nb / 10;
-		i--;
+		signal = -1;
+		result[0] = '-';
 	}
-	if (n < 0)
-		res[0] = '-';
-	return (res);
+	else if (n == 0)
+		result[0] = '0';
+	while (n != 0)
+	{
+		result[digits--] = (n % 10 * signal) + '0';
+		n /= 10;
+	}
+	return (result);
 }
 
 /*

@@ -1,6 +1,6 @@
 NAME = so_long
 
-SRC = src/init.c \
+SRC = src/check.c \
 	  src/free_error.c \
 	  src/main.c \
 	  src/player.c \

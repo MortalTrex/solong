@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:28:46 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/05/27 09:06:12 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:02:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ typedef struct s_map
 	int    rows;
 	int columns;
 	int collectibles;
+	int total_collectibles;
 	int exit;
 	int player;
     int moves;
-	t_point			player_pos;
 } t_map;
 
 typedef struct s_tiles {
@@ -47,26 +47,9 @@ typedef struct s_mlx {
 
 typedef struct s_data {
     t_mlx mlx;
-    t_map map; 
+	t_point	player_pos;
+    t_map map;
     t_tiles tiles;
 }				t_data;
-
-static inline t_data	init_game(void)
-{
-	return ((t_data){
-		.map.map = NULL,
-		.map.rows = 0,
-		.map.columns = 0,
-		.map.collectibles = 0,
-		.map.exit = 0,
-		.map.player = 0,
-		.tiles.collectible = NULL,
-		.tiles.exit = NULL,
-		.tiles.floor = NULL,
-		.tiles.player = NULL,
-		.tiles.wall = NULL,
-		.map.moves = -1,
-	});
-}
 
 #endif

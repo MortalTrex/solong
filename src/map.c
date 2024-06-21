@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:23:55 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/05/30 18:31:02 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/21 19:05:41 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static void	get_lines(char *map_file, t_data *data)
 		i++;
 	}
 	data->map.columns = ft_strlen(data->map.map[0]);
+	data->map.map[data->map.rows] = NULL;
 }
 
 void	init_map(char *map_file, t_data *data)
