@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mortaltrex <mortaltrex@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:27:30 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/06/21 18:26:26 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/24 01:40:48 by mortaltrex       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@
 ///////////////////////////////////////////DEFINE///////////////////////////////////////////
 
 //TEXTURES
-# define WALL_TILE "./textures/wall.xpm"
-# define FLOOR_TILE "./textures/floor.xpm"
-# define PLAYER_TILE "./textures/player.xpm"
-# define ENEMY_TILE "./textures//ghost.xpm"
-# define COLLECTIBLE_TILE "./textures/coin.xpm"
-# define EXIT_TILE "./textures/exit.xpm"
-# define TILE_SIZE 64
+# define WALL "./textures/wall.xpm"
+# define FLOOR "./textures/floor.xpm"
+# define PLAYER "./textures/player.xpm"
+# define COLLECTIBLE "./textures/coin.xpm"
+# define EXIT "./textures/exit.xpm"
+# define SQUARE_SIZE 64
 
 //KEYS
 # define W 119
@@ -35,8 +34,8 @@
 # define RIGHT 65363
 # define ESC 65307
 
-# define KEYPRESS_EVENT 2
-# define DESTROY_NOTIFY_EVENT 17
+# define KEYPRESS 2
+# define DESTROY_NOTIFY 17
 
 ///////////////////////////////////////////INCLUDE///////////////////////////////////////////
 

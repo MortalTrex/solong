@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mortaltrex <mortaltrex@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:23:55 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/06/21 19:05:41 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/06/24 01:34:36 by mortaltrex       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/solong.h"
 
-//Copie src dans dest jusqu'à n caractères ou jusqu'à la fin de src
+// Copie src dans dest jusqu'à n caractères ou jusqu'à la fin de src
 static char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
 	size_t	i;
@@ -21,7 +21,7 @@ static char	*ft_strncpy(char *dest, const char *src, size_t n)
 	while (src[i] != '\0' && i < n)
 	{
 		dest[i] = src[i];
-		i += 1;
+		i++;
 	}
 	if (i < n && src[i] == '\0')
 	{
@@ -31,7 +31,6 @@ static char	*ft_strncpy(char *dest, const char *src, size_t n)
 	dest[i] = '\0';
 	return (dest);
 }
-
 
 char	*trim_free(char *s1, char const *set)
 {
@@ -55,8 +54,8 @@ char	*trim_free(char *s1, char const *set)
 	return (trimmed_str);
 }
 
-//Trouve le nombre de lignes nécessaires et l'attribue à data->map.rows
-static void	get_nbr_rows(char *map_file, t_data *data)
+// Trouve le nombre de lignes nécessaires et l'attribue à data->map.rows
+static void	get_rows(char *map_file, t_data *data)
 {
 	int		count;
 	int		map_fd;
@@ -79,15 +78,14 @@ static void	get_nbr_rows(char *map_file, t_data *data)
 	close(map_fd);
 }
 
-
-static void	get_lines(char *map_file, t_data *data)
+static void	get_columns(char *map_file, t_data *data)
 {
 	int	map_fd;
 	int	i;
 
 	map_fd = open(map_file, O_RDONLY);
 	if (map_fd == -1)
-		ft_error(data, "Map file not found\n");	
+		ft_error(data, "Map file not found\n");
 	i = 0;
 	while (i < data->map.rows)
 		data->map.map[i++] = get_next_line(map_fd);
@@ -105,9 +103,9 @@ static void	get_lines(char *map_file, t_data *data)
 
 void	init_map(char *map_file, t_data *data)
 {
-	get_nbr_rows(map_file, data);
+	get_rows(map_file, data);
 	data->map.map = malloc((data->map.rows + 1) * sizeof(char *));
 	if (data->map.map == NULL)
 		ft_error(data, "Malloc Error\n");
-	get_lines(map_file, data);
+	get_columns(map_file, data);
 }

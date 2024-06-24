@@ -32,13 +32,13 @@ typedef struct s_map
     int moves;
 } t_map;
 
-typedef struct s_tiles {
+typedef struct s_square {
 	void	*wall;
 	void	*floor;
 	void	*player;
 	void	*collectible;
 	void	*exit;
-}				t_tiles;
+}				t_square;
 
 typedef struct s_mlx {
     void		*mlx_ptr;
@@ -49,7 +49,7 @@ typedef struct s_data {
     t_mlx mlx;
 	t_point	player_pos;
     t_map map;
-    t_tiles tiles;
+    t_square square;
 }				t_data;
 
 #endif
