@@ -34,13 +34,16 @@ static void	collect_check(t_data *data)
 	// Si le joueur se trouve sur un collectible, en retire un
 	if (data->map.map[data->player_pos.y][data->player_pos.x] == 'C')
 	{
+		data->map.collectibles--;
+		printf("Collectibles left: %d\n", data->map.collectibles);
+	}
+	{
 		data->map.map[data->player_pos.y][data->player_pos.x] = '0';
-		data->map.collectibles++;
 		return ;
 	}
 	// Si le joueur se trouve sur la sortie et qu'il n'y a plus de collectibles
 	if (data->map.map[data->player_pos.y][data->player_pos.x] == 'E'
-		&& data->map.collectibles == data->map.total_collectibles)
+		&& data->map.collectibles == 0)
 	{
 		ft_printf("You won in %d moves!\n", data->map.moves + 1);
 		exit_game(data);

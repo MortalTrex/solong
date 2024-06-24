@@ -26,7 +26,6 @@ typedef struct s_map
 	int    rows;
 	int columns;
 	int collectibles;
-	int total_collectibles;
 	int exit;
 	int player;
     int moves;

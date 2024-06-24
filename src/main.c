@@ -48,7 +48,6 @@ void put_textures(t_data *data)
 					data->square.floor, SQUARE_SIZE * j, SQUARE_SIZE * i);
 			if (data->map.map[i][j] == 'C')
 			{
-				data->map.total_collectibles++;
 				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 					data->square.collectible, SQUARE_SIZE * j, SQUARE_SIZE * i);
 			}
@@ -109,7 +108,7 @@ int	main(int argc, char **argv)
 		ft_error(&data, "Empty argument\n");
 	bzero(&data, sizeof(t_data));
 	init_map(argv[1], &data);
-	// check(data);
+	check(&data);
 	init_mlx(&data);
 	open_xpm(&data);
 	put_textures(&data);
