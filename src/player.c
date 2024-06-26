@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mortaltrex <mortaltrex@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 10:17:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/06/24 01:20:52 by mortaltrex       ###   ########.fr       */
+/*   Updated: 2024/06/26 13:24:33 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static void	collect_check(t_data *data)
 	{
 		data->map.collectibles--;
 		printf("Collectibles left: %d\n", data->map.collectibles);
-	}
-	{
 		data->map.map[data->player_pos.y][data->player_pos.x] = '0';
 		return ;
 	}
