@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:34:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/06/26 15:19:59 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/02 19:16:35 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,6 @@ void put_textures(t_data *data)
 			}
 		}
 	}
-}
-
-int	exit_game(t_data *data)
-{
-	ft_free_all(data);
-	exit(EXIT_SUCCESS);
-	return (EXIT_SUCCESS);
 }
 
 void	init_mlx(t_data *data)

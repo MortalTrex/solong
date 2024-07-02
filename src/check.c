@@ -63,22 +63,22 @@ static void check_wall(t_data *data)
 		i++;
 	}
 	if (data->map.map[0][0] != '1')
-		ft_error(data, "Map is not valid");
+		ft_error(data, "Walls are not valid");
 }
-static void check_lenwall(t_data *data)
-{
-	int i;
-	int j;
+// static void check_lenwall(t_data *data)
+// {
+// 	int i;
+// 	int j;
 
-	i = 0;
-	j = 0;
-	while (data->map.map[i])
-	{
-		if (ft_strlen(data->map.map[i]) != data->map.columns)
-			ft_error(data, "Map is not valid");
-		i++;
-	}
-}
+// 	i = 0;
+// 	j = 0;
+// 	while (data->map.map[i])
+// 	{
+// 		if (ft_strlen(data->map.map[i]) != data->map.columns)
+// 			ft_error(data, "Map is not valid");
+// 		i++;
+// 	}
+// }
 
 
 static void	count_elements(t_data *data)
@@ -113,9 +113,13 @@ void	check(t_data *data)
 	char	**copy;
 	count_elements(data);
 	check_wall(data);
-	check_lenwall(data);
-	if (data->map.player != 1 || data->map.exit != 1 || data->map.collectibles == 0)
-		ft_error(data, "Incorrect number of elements of exit, player or collectibles"); 
+	//check_lenwall(data);
+	if (data->map.player != 1)
+		ft_error(data, "Incorrect number of players");
+	if (data->map.collectibles == 0)
+		ft_error(data, "No collectibles on the map");
+	if (data->map.exit != 1)
+		ft_error(data, "Incorrect number of exit");
 	copy = copymap(data);
 	if (!flood_fill(copy, &data->map, data->player_pos))
 	{

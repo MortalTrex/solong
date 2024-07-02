@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:51:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/06/21 19:13:05 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/02 19:16:24 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,11 @@ void	ft_free_all(t_data *data)
 	}
 	if (data->map.map != NULL)
 		free_matrix(data->map.map);
+}
+
+int	exit_game(t_data *data)
+{
+	ft_free_all(data);
+	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

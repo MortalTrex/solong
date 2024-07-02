@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 10:17:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/06/26 13:24:33 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/02 19:22:55 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	put_player_tile(t_data *data)
 	char	*moves;
 
 	data->map.moves++;
-	//ft_printf("Moves: %d\n", data->map.moves);
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 		data->square.player, SQUARE_SIZE * data->player_pos.x, SQUARE_SIZE
 		* data->player_pos.y);
@@ -35,7 +34,6 @@ static void	collect_check(t_data *data)
 	if (data->map.map[data->player_pos.y][data->player_pos.x] == 'C')
 	{
 		data->map.collectibles--;
-		printf("Collectibles left: %d\n", data->map.collectibles);
 		data->map.map[data->player_pos.y][data->player_pos.x] = '0';
 		return ;
 	}
