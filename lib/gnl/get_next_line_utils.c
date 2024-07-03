@@ -6,13 +6,13 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:21:46 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/01/29 18:53:48 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/03 14:10:38 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	gft_strlen(const char *str)
+int	gnl_strlen(const char *str)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ int	gft_strlen(const char *str)
 	return (i);
 }
 
-char	*gft_strjoin(char *s1, const char *s2)
+char	*gnl_strjoin(char *s1, const char *s2)
 {
 	char	*dest;
 	int		i;
@@ -41,7 +41,7 @@ char	*gft_strjoin(char *s1, const char *s2)
 	}
 	if (!s2)
 		return (NULL);
-	dest = malloc(sizeof(char) * (gft_strlen(s1) + gft_strlen(s2) + 1));
+	dest = malloc(sizeof(char) * (gnl_strlen(s1) + gnl_strlen(s2) + 1));
 	if (!dest)
 		return (NULL);
 	while (s1[i] != '\0')
@@ -69,13 +69,13 @@ bool	ft_ischr(const char *str, int c)
 	return (false);
 }
 
-char	*gft_strdup(const char *s1)
+char	*gnl_strdup(const char *s1)
 {
 	char	*dup;
 	int		i;
 
 	i = 0;
-	dup = malloc(sizeof(char) * (gft_strlen(s1) + 1));
+	dup = malloc(sizeof(char) * (gnl_strlen(s1) + 1));
 	if (dup == NULL)
 		return (NULL);
 	while (s1[i])
