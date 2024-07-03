@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:21:46 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/07/03 14:10:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/03 19:45:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,20 @@ char	*gnl_strdup(const char *s1)
 	}
 	dup[i] = '\0';
 	return (dup);
+}
+
+char *gnl_strcpy(char *dest, const char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
 /*
