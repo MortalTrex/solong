@@ -32,29 +32,6 @@ static char	*ft_strncpy(char *dest, const char *src, size_t n)
 	return (dest);
 }
 
-char	*trim_free(char *s1, char const *set)
-{
-	size_t	start;
-	size_t	end;
-	char	*trimmed_str;
-
-	if (!s1 || !set)
-		return (NULL);
-	start = 0;
-	while (s1[start] != '\0' && ft_strchr(set, s1[start]) != NULL)
-		start += 1;
-	end = ft_strlen(s1 + start);
-	while (end > start && ft_strchr(set, s1[(start + end) - 1]) != NULL)
-		end -= 1;
-	trimmed_str = malloc((end + 1) * sizeof(char));
-	if (trimmed_str == NULL)
-		return (NULL);
-	ft_strncpy(trimmed_str, (s1 + start), end);
-	free(s1);
-	return (trimmed_str);
-}
-
-// Trouve le nombre de lignes nécessaires et l'attribue à data->map.rows
 static void	get_rows(char *map_file, t_data *data)
 {
 	int		count;
@@ -68,7 +45,7 @@ static void	get_rows(char *map_file, t_data *data)
 	temp = get_next_line(map_fd);
 	while (temp)
 	{
-		count += 1;
+		count++;
 		free(temp);
 		temp = get_next_line(map_fd);
 	}
@@ -78,17 +55,41 @@ static void	get_rows(char *map_file, t_data *data)
 	close(map_fd);
 }
 
+char	*trim_free(char *s1, char const *set)
+{
+	size_t	start;
+	size_t	end;
+	char	*trimmed_str;
+
+	if (!s1 || !set)
+		return (NULL);
+	start = 0;
+	while (s1[start] != '\0' && ft_strchr(set, s1[start]) != NULL)
+		start++;
+	end = ft_strlen(s1 + start);
+	while (end > start && ft_strchr(set, s1[(start + end) - 1]) != NULL)
+		end -= 1;
+	trimmed_str = malloc((end + 1) * sizeof(char));
+	if (trimmed_str == NULL)
+		return (NULL);
+	ft_strncpy(trimmed_str, (s1 + start), end);
+	free(s1);
+	return (trimmed_str);
+}
+
 static void	get_columns(char *map_file, t_data *data)
 {
 	int	map_fd;
 	int	i;
-
 	map_fd = open(map_file, O_RDONLY);
 	if (map_fd == -1)
 		ft_error(data, "Map file not found\n");
 	i = 0;
 	while (i < data->map.rows)
-		data->map.map[i++] = get_next_line(map_fd);
+	{
+		data->map.map[i] = get_next_line(map_fd);
+		i++;
+	}
 	data->map.map[i] = NULL;
 	close(map_fd);
 	i = 0;
@@ -100,6 +101,7 @@ static void	get_columns(char *map_file, t_data *data)
 	data->map.columns = ft_strlen(data->map.map[0]);
 	data->map.map[data->map.rows] = NULL;
 }
+
 
 void	init_map(char *map_file, t_data *data)
 {

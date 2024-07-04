@@ -39,6 +39,7 @@ static bool	flood_fill(char **copy, t_map *map, t_point cur)
 	flood_fill(copy, map, (t_point){cur.x, cur.y - 1});
 	return (check_collectibles == map->collectibles && exit);
 }
+
 static void check_wall(t_data *data)
 {
 	int i;
@@ -65,21 +66,12 @@ static void check_wall(t_data *data)
 	if (data->map.map[0][0] != '1')
 		ft_error(data, "Walls are not valid");
 }
-// static void check_lenwall(t_data *data)
-// {
-// 	int i;
-// 	int j;
 
-// 	i = 0;
-// 	j = 0;
-// 	while (data->map.map[i])
-// 	{
-// 		if (ft_strlen(data->map.map[i]) != data->map.columns)
-// 			ft_error(data, "Map is not valid");
-// 		i++;
-// 	}
-// }
-
+void check_character(char c, t_data *data)
+{
+	if (c != '1' && c != '0' && c != 'C' && c != 'E' && c != 'P')
+		ft_error(data, "Invalid character in map");
+}
 
 static void	count_elements(t_data *data)
 {
@@ -92,6 +84,7 @@ static void	count_elements(t_data *data)
 		j = 0;
 		while (j < data->map.columns)
 		{
+			check_character(data->map.map[i][j], data);
 			if (data->map.map[i][j] == 'C')
 				data->map.collectibles++;
 			if (data->map.map[i][j] == 'P')
@@ -108,23 +101,27 @@ static void	count_elements(t_data *data)
 	}
 }
 
-void	check(t_data *data)
+void	check(char *file, t_data *data)
 {
 	char	**copy;
+	int	len;
+
+	len = ft_strlen(file);
+	if (len < 4 || ft_strncmp(&file[len - 4], ".ber", 4))
+		ft_error(data, "Invalid file extension");
 	count_elements(data);
-	check_wall(data);
-	//check_lenwall(data);
 	if (data->map.player != 1)
 		ft_error(data, "Incorrect number of players");
 	if (data->map.collectibles == 0)
 		ft_error(data, "No collectibles on the map");
 	if (data->map.exit != 1)
 		ft_error(data, "Incorrect number of exit");
+	check_wall(data);
 	copy = copymap(data);
 	if (!flood_fill(copy, &data->map, data->player_pos))
 	{
 		free_matrix(copy);
-		ft_error(data, "Map is not valid");
+		ft_error(data, "Map is not playable");
 	}
 	free_matrix(copy);
 }

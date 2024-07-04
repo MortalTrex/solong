@@ -101,7 +101,7 @@ int	main(int argc, char **argv)
 		ft_error(&data, "Empty argument\n");
 	bzero(&data, sizeof(t_data));
 	init_map(argv[1], &data);
-	check(&data);
+	check(argv[1], &data);
 	init_mlx(&data);
 	open_xpm(&data);
 	put_textures(&data);

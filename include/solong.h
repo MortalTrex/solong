@@ -74,6 +74,6 @@ void    put_player_tile(t_data *data);
 void	init_map(char *map_file, t_data *data);
 
 //CHECK
-void check(t_data *data);
+void	check(char *file, t_data *data);
 
 #endif
