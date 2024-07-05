@@ -27,9 +27,12 @@ static void	open_xpm(t_data *data)
 			COLLECTIBLE, &img_size, &img_size);
 	data->square.exit = mlx_xpm_file_to_image(data->mlx.mlx_ptr, EXIT,
 			&img_size, &img_size);
+	if (!data->square.wall || !data->square.floor || !data->square.player
+		|| !data->square.collectible || !data->square.exit)
+		ft_error(data, "XPM Error\n");
 }
 
-void put_textures(t_data *data)
+void	put_textures(t_data *data)
 {
 	int	i;
 	int	j;
@@ -47,22 +50,14 @@ void put_textures(t_data *data)
 				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 					data->square.floor, SQUARE_SIZE * j, SQUARE_SIZE * i);
 			if (data->map.map[i][j] == 'C')
-			{
 				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 					data->square.collectible, SQUARE_SIZE * j, SQUARE_SIZE * i);
-			}
 			if (data->map.map[i][j] == 'E')
 				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 					data->square.exit, SQUARE_SIZE * j, SQUARE_SIZE * i);
-			if (data->map.map[i][j] == 'P')
-			{
-				mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
-					data->square.player, SQUARE_SIZE * j, SQUARE_SIZE * i);
-				data->player_pos.x = j;
-				data->player_pos.y = i;
-			}
 		}
 	}
+	put_player_tile(data);
 }
 
 void	init_mlx(t_data *data)
@@ -96,9 +91,15 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-		ft_error(&data, "Wrong number of arguments\n");
+	{
+		ft_printf("Wrong number of arguments\n");
+		return (EXIT_FAILURE);
+	}
 	if (*argv[1] == '\0')
-		ft_error(&data, "Empty argument\n");
+	{
+		ft_printf("Empty map\n");
+		return (EXIT_FAILURE);
+	}
 	bzero(&data, sizeof(t_data));
 	init_map(argv[1], &data);
 	check(argv[1], &data);
@@ -106,7 +107,7 @@ int	main(int argc, char **argv)
 	open_xpm(&data);
 	put_textures(&data);
 	mlx_hook(data.mlx.win_ptr, KEYPRESS, KeyPressMask, ft_commands, &data);
-	mlx_hook(data.mlx.win_ptr, DESTROY_NOTIFY, StructureNotifyMask, exit_game, &data);
+	mlx_hook(data.mlx.win_ptr, DST_N, StructureNotifyMask, exit_game, &data);
 	mlx_loop(data.mlx.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

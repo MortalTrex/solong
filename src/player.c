@@ -12,10 +12,15 @@
 
 #include "../include/solong.h"
 
-// Affiche le joueur sur la map et compte le nombre de mouvements
+void	check_character(char c, t_data *data)
+{
+	if (c != '1' && c != '0' && c != 'C' && c != 'E' && c != 'P')
+		ft_error(data, "Invalid character in map");
+}
+
 void	put_player_tile(t_data *data)
 {
-	char	*moves;
+	char	*print_moves;
 
 	data->map.moves++;
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
@@ -23,21 +28,20 @@ void	put_player_tile(t_data *data)
 		* data->player_pos.y);
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 		data->square.wall, 0, 0);
-	moves = ft_itoa(data->map.moves);
-	mlx_string_put(data->mlx.mlx_ptr, data->mlx.win_ptr, 32, 10, 1, moves);
-	free(moves);
+	print_moves = ft_itoa(data->map.moves);
+	mlx_string_put(data->mlx.mlx_ptr,
+		data->mlx.win_ptr, 32, 10, 1, print_moves);
+	free(print_moves);
 }
 
 static void	collect_check(t_data *data)
 {
-	// Si le joueur se trouve sur un collectible, en retire un
 	if (data->map.map[data->player_pos.y][data->player_pos.x] == 'C')
 	{
 		data->map.collectibles--;
 		data->map.map[data->player_pos.y][data->player_pos.x] = '0';
 		return ;
 	}
-	// Si le joueur se trouve sur la sortie et qu'il n'y a plus de collectibles
 	if (data->map.map[data->player_pos.y][data->player_pos.x] == 'E'
 		&& data->map.collectibles == 0)
 	{
@@ -74,8 +78,8 @@ void	update_player_pos(t_data *data, bool horizontal, int length)
 	}
 	if (!horizontal)
 	{
-		if (data->map.map[data->player_pos.y
-			+ length][data->player_pos.x] == '1' && data->player_pos.y > 0
+		if (data->map.map[data->player_pos.y + length]
+			[data->player_pos.x] == '1' && data->player_pos.y > 0
 			&& data->player_pos.x > 0 && data->player_pos.y < data->map.rows
 			&& data->player_pos.x < data->map.columns)
 			return ;

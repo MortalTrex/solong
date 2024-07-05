@@ -12,7 +12,6 @@
 
 #include "../include/solong.h"
 
-// Copie src dans dest jusqu'à n caractères ou jusqu'à la fin de src
 static char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
 	size_t	i;
@@ -81,6 +80,7 @@ static void	get_columns(char *map_file, t_data *data)
 {
 	int	map_fd;
 	int	i;
+
 	map_fd = open(map_file, O_RDONLY);
 	if (map_fd == -1)
 		ft_error(data, "Map file not found\n");
@@ -101,7 +101,6 @@ static void	get_columns(char *map_file, t_data *data)
 	data->map.columns = ft_strlen(data->map.map[0]);
 	data->map.map[data->map.rows] = NULL;
 }
-
 
 void	init_map(char *map_file, t_data *data)
 {

@@ -57,6 +57,7 @@ char	*ft_assembleline(char *tmp)
 	line[i] = '\0';
 	return (line);
 }
+
 char	*get_next_line(int fd)
 {
 	static char	*tmp;
@@ -86,30 +87,32 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-
 /*
-int main() 
+int	main(void)
 {
-    int fd = open("test.md", O_RDONLY);
-    if (fd == -1) 
-  	{
-        perror("Error opening file");
-        return 1;
-    }
-    char *line;
-    int i = 0;
-  	line = get_next_line(fd);
-  	free(line);
-  	while (line)
-    {
-        line = get_next_line(fd);
-        if (!line)
-            break;
-        printf("%s", line);
-        free(line);
-        i++;
-    }
-    close(fd);
-    return 0;
+	int		fd;
+	char	*line;
+	int		i;
+
+	fd = open("test.md", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		return (1);
+	}
+	i = 0;
+	line = get_next_line(fd);
+	free(line);
+	while (line)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		printf("%s", line);
+		free(line);
+		i++;
+	}
+	close(fd);
+	return (0);
 }
 */

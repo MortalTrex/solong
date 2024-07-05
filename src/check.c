@@ -40,16 +40,17 @@ static bool	flood_fill(char **copy, t_map *map, t_point cur)
 	return (check_collectibles == map->collectibles && exit);
 }
 
-static void check_wall(t_data *data)
+static void	check_wall(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
 	while (data->map.map[i])
 	{
-		if (data->map.map[i][0] != '1' || data->map.map[i][data->map.columns - 1] != '1')
+		if (data->map.map[i][0] != '1' || data->map.map[i][data->map.columns
+			- 1] != '1')
 			ft_error(data, "Walls are not valid");
 		j = 0;
 		if (i == 0 || i == data->map.rows - 1)
@@ -67,22 +68,16 @@ static void check_wall(t_data *data)
 		ft_error(data, "Walls are not valid");
 }
 
-void check_character(char c, t_data *data)
-{
-	if (c != '1' && c != '0' && c != 'C' && c != 'E' && c != 'P')
-		ft_error(data, "Invalid character in map");
-}
-
 static void	count_elements(t_data *data)
 {
 	int	i;
-	int j;
+	int	j;
 
-	i = 0;
-	while (i < data->map.rows)
+	i = -1;
+	while (++i < data->map.rows)
 	{
-		j = 0;
-		while (j < data->map.columns)
+		j = -1;
+		while (++j < data->map.columns)
 		{
 			check_character(data->map.map[i][j], data);
 			if (data->map.map[i][j] == 'C')
@@ -94,17 +89,15 @@ static void	count_elements(t_data *data)
 				data->map.player++;
 			}
 			if (data->map.map[i][j] == 'E')
-				data->map.exit++;	
-			j++;
+				data->map.exit++;
 		}
-		i++;
 	}
 }
 
 void	check(char *file, t_data *data)
 {
 	char	**copy;
-	int	len;
+	int		len;
 
 	len = ft_strlen(file);
 	if (len < 4 || ft_strncmp(&file[len - 4], ".ber", 4))

@@ -12,9 +12,9 @@
 
 #include "ft_printf.h"
 
-int fft_strlen(char *str)
+int	fft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)
@@ -28,11 +28,11 @@ int	ft_putstr(char *str)
 {
 	if (!str)
 		return (ft_putstr("(null)"));
-	return (write (1, str, fft_strlen(str)));
+	return (write(1, str, fft_strlen(str)));
 }
 
 /*
-int main()
+int	main(void)
 {
 	printf("%d", ft_putstr(NULL));
 	printf("\n%s", "");

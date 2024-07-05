@@ -87,7 +87,7 @@ char	*gnl_strdup(const char *s1)
 	return (dup);
 }
 
-char *gnl_strcpy(char *dest, const char *src)
+char	*gnl_strcpy(char *dest, const char *src)
 {
 	int	i;
 
