@@ -11,24 +11,20 @@ static char	**copymap(t_data *data)
 		ft_error(data, "Malloc failed");
 	while (data->map.map[i])
 	{
-		if (data->map.map[i] != NULL)
+		if (data->map.map[i] == NULL)
 		{
-			copy[i] = ft_strdup(data->map.map[i]);
-			if (copy[i] == NULL)
-			{
-				free_matrix(copy);
-				ft_error(data, "Malloc failed");
-			}
+			free_matrix(copy);
+			ft_error(data, "Malloc failed");
 		}
-		if (data->map.map[i] == NULL) 
+		copy[i] = ft_strdup(data->map.map[i]);
+		if (copy[i] == NULL)
 		{
 			free_matrix(copy);
 			ft_error(data, "Malloc failed");
 		}
 		i++;
 	}
-	copy[i] = NULL;
-	return (copy);
+	return (copy[i] = NULL, copy);
 }
 
 static bool	flood_fill(char **copy, t_map *map, t_point cur)

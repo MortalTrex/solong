@@ -6,11 +6,39 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:23:55 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/07/02 19:20:25 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/06 17:45:53 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/solong.h"
+
+static void	get_map(char *map_file, t_data *data)
+{
+	int		map_fd;
+	int		i;
+
+	map_fd = open(map_file, O_RDONLY);
+	if (map_fd == -1)
+		ft_error(data, "Map file not found\n");
+	data->map.map = malloc(sizeof(char *) * (data->map.rows + 1));
+	if (!data->map.map)
+		ft_error(data, "Memory allocation error\n");
+	i = 0;
+	char *line = NULL;
+	while (get_next_line(map_fd) > 0)
+	{
+		if (i >= data->map.rows)
+			ft_error(data, "Too many rows in the map\n");
+		data->map.map[i] = line;
+		line = NULL;
+		i++;
+	}
+	if (i != data->map.rows)
+		ft_error(data, "Not enough rows in the map\n");
+	data->map.map[i] = NULL;
+	close(map_fd);
+	data->map.columns = ft_strlen(data->map.map[0]);
+}
 
 static void	get_rows(char *map_file, t_data *data)
 {
@@ -37,36 +65,6 @@ static void	get_rows(char *map_file, t_data *data)
 	close(map_fd);
 }
 
-
-// static void	get_columns(char *map_file, t_data *data)
-// {
-// 	int	map_fd;
-// 	int	i;
-
-// 	map_fd = open(map_file, O_RDONLY);
-// 	if (map_fd == -1)
-// 		ft_error(data, "Map file not found\n");
-// 	i = 0;
-// 	while (i < data->map.rows)
-// 	{
-// 		data->map.map[i] = get_next_line(map_fd);
-// 		if (data->map.map[i] == NULL)
-// 			ft_error(data, "Map Error\n");
-// 		i++;
-// 	}
-// 	data->map.map[i] = NULL;
-// 	close(map_fd);
-// 	i = 0;
-// 	while (i < (data->map.rows - 1))
-// 	{
-// 		data->map.map[i][ft_strlen(data->map.map[i]) - 1] = 0;
-// 		if (data->map.map[i] == NULL)
-// 			ft_error(data, "Map Error\n");
-// 		i++;
-// 	}
-// 	data->map.columns = ft_strlen(data->map.map[0]);
-// }
-
 static void	get_columns(char *map_file, t_data *data)
 {
 	int	map_fd;
@@ -75,20 +73,18 @@ static void	get_columns(char *map_file, t_data *data)
 	map_fd = open(map_file, O_RDONLY);
 	if (map_fd == -1)
 		ft_error(data, "Map file not found\n");
-	
 	data->map.map = malloc(sizeof(char *) * (data->map.rows + 1));
 	if (!data->map.map)
 		ft_error(data, "Memory allocation error\n");
-
-	i = 0;
-	while (i < data->map.rows)
+	i = -1;
+	while (++i < data->map.rows)
 	{
 		data->map.map[i] = get_next_line(map_fd);
-		i++;
+		if (!data->map.map[i])
+			ft_error(data, "Memory allocation error\n");
 	}
 	data->map.map[i] = NULL;
 	close(map_fd);
-
 	i = 0;
 	while (i < (data->map.rows - 1))
 	{
@@ -97,15 +93,12 @@ static void	get_columns(char *map_file, t_data *data)
 		data->map.map[i][ft_strlen(data->map.map[i]) - 1] = 0;
 		i++;
 	}
-
-	if (data->map.map[0] == NULL)
-		ft_error(data, "Map Error\n");
 	data->map.columns = ft_strlen(data->map.map[0]);
 }
 
 void	init_map(char *map_file, t_data *data)
 {
-	int		len;
+	int	len;
 
 	len = ft_strlen(map_file);
 	if (len < 4 || ft_strncmp(&map_file[len - 4], ".ber", 4))

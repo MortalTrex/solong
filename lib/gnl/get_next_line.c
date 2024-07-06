@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:21:42 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/07/03 19:59:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/06 17:20:35 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ char	*ft_assembleline(char *tmp)
 		i++;
 	line = malloc(sizeof(char) * (i + 1));
 	if (!line)
+	{
+		free(line);
 		return (NULL);
+	}
 	i = 0;
 	while (tmp[i] != '\n' && tmp[i] != '\0')
 	{
@@ -64,31 +67,23 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*line;
 	char		*new_tmp;
-	//int 		*error;
 
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (fd < 0 || BUFFER_SIZE <= 0 || !buffer)
-	{
-		//*error = 1;
 		return (NULL);
-	}
 	tmp = ft_createtmp(fd, buffer, tmp);
 	free(buffer);
 	if (!tmp)
-	{
-		//*error = 1;
 		return (NULL);
-	}
 	line = ft_assembleline(tmp);
 	new_tmp = malloc(sizeof(char) * (gnl_strlen(tmp) - gnl_strlen(line) + 1));
 	if (!new_tmp)
 		return (free(tmp), NULL);
-	strcpy(new_tmp, tmp + gnl_strlen(line));
+	gnl_strcpy(new_tmp, tmp + gnl_strlen(line));
 	free(tmp);
 	tmp = new_tmp;
 	if (tmp[0] == '\0')
 	{
-		//*error = 1;
 		free(tmp);
 		tmp = NULL;
 	}
