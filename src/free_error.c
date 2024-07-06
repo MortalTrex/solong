@@ -25,9 +25,23 @@ void	ft_error(t_data *data, char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	free_matrix(char **matrix)
+void	destroy_square(t_data *data)
 {
-	size_t	i;
+	if (data->square.wall)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->square.wall);
+	if (data->square.floor)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->square.floor);
+	if (data->square.player)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->square.player);
+	if (data->square.collectible)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->square.collectible);
+	if (data->square.exit)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->square.exit);
+}
+
+void free_matrix(char **matrix)
+{
+	size_t i;
 
 	i = 0;
 	if (!matrix)
@@ -41,20 +55,6 @@ void	free_matrix(char **matrix)
 	if (i > 0)
 		free(matrix);
 	matrix = NULL;
-}
-
-void	destroy_square(t_data *data)
-{
-	if (data->square.wall)
-		mlx_destroy_image(data->mlx.mlx_ptr, data->square.wall);
-	if (data->square.floor)
-		mlx_destroy_image(data->mlx.mlx_ptr, data->square.floor);
-	if (data->square.player)
-		mlx_destroy_image(data->mlx.mlx_ptr, data->square.player);
-	if (data->square.collectible)
-		mlx_destroy_image(data->mlx.mlx_ptr, data->square.collectible);
-	if (data->square.exit)
-		mlx_destroy_image(data->mlx.mlx_ptr, data->square.exit);
 }
 
 void	ft_free_all(t_data *data)

@@ -6,13 +6,25 @@ static char	**copymap(t_data *data)
 	char	**copy;
 
 	i = 0;
-	copy = malloc((data->map.rows + 1) * sizeof(char *));
+	copy = malloc(sizeof(char *) * (data->map.rows + 1));
 	if (!copy)
 		ft_error(data, "Malloc failed");
 	while (data->map.map[i])
 	{
 		if (data->map.map[i] != NULL)
+		{
 			copy[i] = ft_strdup(data->map.map[i]);
+			if (copy[i] == NULL)
+			{
+				free_matrix(copy);
+				ft_error(data, "Malloc failed");
+			}
+		}
+		if (data->map.map[i] == NULL) 
+		{
+			free_matrix(copy);
+			ft_error(data, "Malloc failed");
+		}
 		i++;
 	}
 	copy[i] = NULL;
@@ -64,8 +76,6 @@ static void	check_wall(t_data *data)
 		}
 		i++;
 	}
-	if (data->map.map[0][0] != '1')
-		ft_error(data, "Walls are not valid");
 }
 
 static void	count_elements(t_data *data)
@@ -114,7 +124,7 @@ void	check(char *file, t_data *data)
 	if (!flood_fill(copy, &data->map, data->player_pos))
 	{
 		free_matrix(copy);
-		ft_error(data, "Map is not playable");
+		ft_error(data, "Map is not closed");
 	}
 	free_matrix(copy);
 }

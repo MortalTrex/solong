@@ -53,9 +53,6 @@
 
 ////////////////////////////PROTOTYPES//////////////////////////////
 
-// INIT
-void	ft_init(t_data *data);
-
 // FREE
 void	ft_free_all(t_data *data);
 int		exit_game(t_data *data);
@@ -64,8 +61,8 @@ void	destroy_square(t_data *data);
 void	ft_error(t_data *data, char *str);
 
 // RENDER
-void	render_tiles(t_data *data);
 void	render_map(t_data *data);
+void	put_textures(t_data *data);
 
 // PLAYER
 void	update_player_pos(t_data *data, bool horizontal, int length);

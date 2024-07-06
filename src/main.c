@@ -100,7 +100,7 @@ int	main(int argc, char **argv)
 		ft_printf("Empty map\n");
 		return (EXIT_FAILURE);
 	}
-	bzero(&data, sizeof(t_data));
+	ft_bzero(&data, sizeof(t_data));
 	init_map(argv[1], &data);
 	check(argv[1], &data);
 	init_mlx(&data);

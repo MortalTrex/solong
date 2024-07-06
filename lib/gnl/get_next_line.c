@@ -64,14 +64,21 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*line;
 	char		*new_tmp;
+	//int 		*error;
 
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (fd < 0 || BUFFER_SIZE <= 0 || !buffer)
+	{
+		//*error = 1;
 		return (NULL);
+	}
 	tmp = ft_createtmp(fd, buffer, tmp);
 	free(buffer);
 	if (!tmp)
+	{
+		//*error = 1;
 		return (NULL);
+	}
 	line = ft_assembleline(tmp);
 	new_tmp = malloc(sizeof(char) * (gnl_strlen(tmp) - gnl_strlen(line) + 1));
 	if (!new_tmp)
@@ -81,6 +88,7 @@ char	*get_next_line(int fd)
 	tmp = new_tmp;
 	if (tmp[0] == '\0')
 	{
+		//*error = 1;
 		free(tmp);
 		tmp = NULL;
 	}

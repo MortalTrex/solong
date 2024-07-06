@@ -12,25 +12,6 @@
 
 #include "../include/solong.h"
 
-static char	*ft_strncpy(char *dest, const char *src, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i] != '\0' && i < n)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (i < n && src[i] == '\0')
-	{
-		while (dest[i] != '\0')
-			dest[i++] = '\0';
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
 static void	get_rows(char *map_file, t_data *data)
 {
 	int		count;
@@ -47,6 +28,8 @@ static void	get_rows(char *map_file, t_data *data)
 		count++;
 		free(temp);
 		temp = get_next_line(map_fd);
+		if (!temp)
+			break ;
 	}
 	if (count == 0)
 		ft_error(data, "Empty map\n");
@@ -54,27 +37,35 @@ static void	get_rows(char *map_file, t_data *data)
 	close(map_fd);
 }
 
-char	*trim_free(char *s1, char const *set)
-{
-	size_t	start;
-	size_t	end;
-	char	*trimmed_str;
 
-	if (!s1 || !set)
-		return (NULL);
-	start = 0;
-	while (s1[start] != '\0' && ft_strchr(set, s1[start]) != NULL)
-		start++;
-	end = ft_strlen(s1 + start);
-	while (end > start && ft_strchr(set, s1[(start + end) - 1]) != NULL)
-		end -= 1;
-	trimmed_str = malloc((end + 1) * sizeof(char));
-	if (trimmed_str == NULL)
-		return (NULL);
-	ft_strncpy(trimmed_str, (s1 + start), end);
-	free(s1);
-	return (trimmed_str);
-}
+// static void	get_columns(char *map_file, t_data *data)
+// {
+// 	int	map_fd;
+// 	int	i;
+
+// 	map_fd = open(map_file, O_RDONLY);
+// 	if (map_fd == -1)
+// 		ft_error(data, "Map file not found\n");
+// 	i = 0;
+// 	while (i < data->map.rows)
+// 	{
+// 		data->map.map[i] = get_next_line(map_fd);
+// 		if (data->map.map[i] == NULL)
+// 			ft_error(data, "Map Error\n");
+// 		i++;
+// 	}
+// 	data->map.map[i] = NULL;
+// 	close(map_fd);
+// 	i = 0;
+// 	while (i < (data->map.rows - 1))
+// 	{
+// 		data->map.map[i][ft_strlen(data->map.map[i]) - 1] = 0;
+// 		if (data->map.map[i] == NULL)
+// 			ft_error(data, "Map Error\n");
+// 		i++;
+// 	}
+// 	data->map.columns = ft_strlen(data->map.map[0]);
+// }
 
 static void	get_columns(char *map_file, t_data *data)
 {
@@ -84,6 +75,11 @@ static void	get_columns(char *map_file, t_data *data)
 	map_fd = open(map_file, O_RDONLY);
 	if (map_fd == -1)
 		ft_error(data, "Map file not found\n");
+	
+	data->map.map = malloc(sizeof(char *) * (data->map.rows + 1));
+	if (!data->map.map)
+		ft_error(data, "Memory allocation error\n");
+
 	i = 0;
 	while (i < data->map.rows)
 	{
@@ -92,21 +88,30 @@ static void	get_columns(char *map_file, t_data *data)
 	}
 	data->map.map[i] = NULL;
 	close(map_fd);
+
 	i = 0;
 	while (i < (data->map.rows - 1))
 	{
-		data->map.map[i] = trim_free(data->map.map[i], "\n");
+		if (data->map.map[i] == NULL)
+			ft_error(data, "Map Error\n");
+		data->map.map[i][ft_strlen(data->map.map[i]) - 1] = 0;
 		i++;
 	}
+
+	if (data->map.map[0] == NULL)
+		ft_error(data, "Map Error\n");
 	data->map.columns = ft_strlen(data->map.map[0]);
-	data->map.map[data->map.rows] = NULL;
 }
 
 void	init_map(char *map_file, t_data *data)
 {
+	int		len;
+
+	len = ft_strlen(map_file);
+	if (len < 4 || ft_strncmp(&map_file[len - 4], ".ber", 4))
+		ft_error(data, "Invalid file extension");
 	get_rows(map_file, data);
-	data->map.map = malloc((data->map.rows + 1) * sizeof(char *));
-	if (data->map.map == NULL)
-		ft_error(data, "Malloc Error\n");
+	if (data->map.rows < 3)
+		ft_error(data, "Map is too small\n");
 	get_columns(map_file, data);
 }
