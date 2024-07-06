@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:34:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/07/06 17:15:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/06 19:53:36 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	open_xpm(t_data *data)
 {
 	int	img_size;
+
 	img_size = SQUARE_SIZE;
 	data->square.wall = mlx_xpm_file_to_image(data->mlx.mlx_ptr, WALL,
 			&img_size, &img_size);

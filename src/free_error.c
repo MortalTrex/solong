@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 21:51:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/07/06 17:05:42 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/07/06 20:15:42 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	free_matrix(char **matrix)
 		matrix[i] = NULL;
 		i++;
 	}
-	//if (i > 0)
 	free(matrix);
 	matrix = NULL;
 }
@@ -69,13 +68,11 @@ void	ft_free_all(t_data *data)
 		mlx_destroy_display(data->mlx.mlx_ptr);
 		free(data->mlx.mlx_ptr);
 	}
-	ft_printf("matrix == %p\n", data->map.map);
 	if (data->map.map != NULL)
 	{
 		free_matrix(data->map.map);
 		data->map.map = NULL;
 	}
-	ft_printf("matrix == %p\n", data->map.map);
 }
 
 int	exit_game(t_data *data)
